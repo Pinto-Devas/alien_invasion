@@ -1,6 +1,7 @@
 import pygame
 
 class Ship():
+  
   def __init__(self, ai_settings, screen):
     """Inicializa a espaçonave e define sua posição inicial."""
     self.screen = screen
@@ -25,9 +26,9 @@ class Ship():
   def update(self):
     """Atualiza a posição da espaçonave de acordo com as flags de movimento."""
     # Atualiza o valor do centro da espaçonave, e não o retângulo
-    if self.moving_right == True:
+    if self.moving_right and self.rect.right < self.screen_rect.right:
       self.center += self.ai_settings.ship_speed_factor
-    if self.moving_left == True:
+    if self.moving_left and self.rect.left > 0:
       self.center -= self.ai_settings.ship_speed_factor
     
     # Atualiza o objeto rect de acordo com self.center
