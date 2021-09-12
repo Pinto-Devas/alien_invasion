@@ -3,13 +3,20 @@ import pygame
 from bullet import Bullet
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
-  """REsponde a pressionamentos de tecla."""
+  """Responde a pressionamentos de tecla."""
   if event.key ==  pygame.K_RIGHT:
     ship.moving_right = True
   elif event.key == pygame.K_LEFT:
     ship.moving_left = True
   elif event.key == pygame.K_SPACE:
-    # Cria um novo projétil e o adiciona ao grupo de projéteis
+    fire_bullet(ai_settings, screen, ship, bullets)
+  elif event.key == pygame.K_q:
+    sys.exit()
+
+def fire_bullet(ai_settings, screen, ship, bullets):
+  """Dispara um projétil se o limite ainda não foi alcançado."""
+  # Cria um novo projétil e o adiciona ao grupo de projéteis
+  if len(bullets) < ai_settings.bullets_allowed:
     new_bullet = Bullet(ai_settings, screen, ship)
     bullets.add(new_bullet)
 
@@ -41,3 +48,13 @@ def update_screen(ai_settings, screen, ship, bullets):
 
   # Deixa a tela mais recente visível
   pygame.display.flip()
+
+def update_bullets(bullets):
+  """Atualiza a posição dos projéteis e se livra dos projéteis antigos."""
+  # Atualiza as posições dos projéteis
+  bullets.update()
+
+  # Livra-se dos projéteis que desapareceram
+  for bullet in bullets.copy():
+    if bullet.rect.bottom <= 0:
+      bullets.remove(bullet)
