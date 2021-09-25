@@ -23,6 +23,10 @@ class Ship():
     self.moving_right = False
     self.moving_left = False
 
+  def center_ship(self):
+    """Centraliza a espaçonave na tela."""
+    self.center = self.screen_rect.centerx
+
   def update(self):
     """Atualiza a posição da espaçonave de acordo com as flags de movimento."""
     # Atualiza o valor do centro da espaçonave, e não o retângulo
